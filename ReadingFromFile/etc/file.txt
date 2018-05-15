@@ -1,0 +1,6 @@
+This is a file I just created
+I don't really know what to type
+so lets type an integer:
+21
+and a double:
+21.0
