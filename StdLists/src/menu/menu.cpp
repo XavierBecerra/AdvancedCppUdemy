@@ -4,6 +4,7 @@
 #include <fstream>
 
 const std::string databaseName = "/home/xavi/Projects/CppCourses/AdvancedCppUdemy/StdLists/dat/database.bin";
+const std::string etcPath = "/home/xavi/Projects/CppCourses/AdvancedCppUdemy/StdLists/etc/";
 const unsigned int DataSize = 50;
 
 void displayRecipes(const std::list<std::string> & recipes)
@@ -111,6 +112,30 @@ void addRecipe(std::list<std::string> & recipes)
     {
         recipes.push_back(new_recipe);
     }
+
+    std::ofstream outFile;
+    std::string filName = etcPath + new_recipe + ".txt";
+    outFile.open(filName);
+
+    if( !outFile.is_open() )
+    {
+        std::cout << "File could not create file "<< filName << std::endl; 
+        return;
+    }
+
+    std::cout <<std::endl << "Please Add the ingredients: (`quit` to finish) " <<std::endl;
+
+    std::string ingredient;
+    while(ingredient != "quit" && ingredient != "Quit")
+    {
+        std::cin >> ingredient;
+        if(ingredient != "quit" && ingredient != "Quit")
+        {
+            outFile << ingredient << std::endl; 
+            outFile.flush();
+        }
+    }
+    outFile.close();
 }
 
 void deleteRecipe(std::list<std::string> & recipes)
@@ -136,6 +161,15 @@ void deleteRecipe(std::list<std::string> & recipes)
 
     if(exists)
     {
+        std::string filName = etcPath + *it + ".txt";
+        bool exists = std::ifstream(filName);
+        if(exists) 
+        { 
+            std::cout<<"Deleting file " << filName << " ..." << std::flush;
+            std::remove(filName.data()); // delete file
+            std::cout<<" Success !" << std::endl;
+        }
+
         recipes.erase(it);
     }
 }
