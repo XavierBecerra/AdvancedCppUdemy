@@ -1,0 +1,20 @@
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+set (CMAKE_CXX_STANDARD 11)
+cmake_minimum_required(VERSION 3.6)
+
+get_filename_component(ProjectId ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+string(REPLACE " " "_" ProjectId ${ProjectId})
+
+project(${ProjectId})
+
+file(GLOB project_sources src/maps.cpp)
+
+add_executable(${ProjectId} ${project_sources})
+
+file(GLOB project2_sources src/custommaps.cpp)
+
+add_executable("CustomMaps" ${project2_sources})
