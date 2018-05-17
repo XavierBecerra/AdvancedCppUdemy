@@ -4,3 +4,4 @@
 mkdir "$1" "$1/src" "$1/build" 
 cp "BasicCMakeLists.txt" "$1/CMakeLists.txt"
 cp "Basic.cpp" "$1/src/$2"
+chmod 777 -R "./$1/"
