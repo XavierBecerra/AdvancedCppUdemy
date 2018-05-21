@@ -26,6 +26,10 @@ public:
 
     const Complex_nr & operator+= ( const Complex_nr & obj) ;
 
+    bool operator== ( const Complex_nr & obj) const;
+
+    bool operator!= ( const Complex_nr & obj) const ;
+
 private:
     double real;
     double img;

@@ -22,7 +22,25 @@ int main()
     std::cout << c1 << " + " << d << " = " << c3 << std::endl;
     Complex_nr c4 = d + c1;
     std::cout << d << " + " << c1 << " = " << c4 << std::endl;
-    
+
+    Complex_nr c5 = c1;
+    if(c1 == c5)
+    {
+        std::cout<< c1 << " equal than " << c5<< std::endl;
+    }    
+    else
+    {
+        std::cout<< c1 << " not equal than " << c5<< std::endl;
+    }  
+
+    if(c1 != c2)
+    {
+        std::cout<< c1 << " not equal than " << c2<< std::endl;
+    }    
+    else
+    {
+        std::cout<< c1 << " equal than " << c2<< std::endl;
+    }      
 
     return 0;
 }

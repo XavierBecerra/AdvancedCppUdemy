@@ -53,4 +53,15 @@ const Complex_nr & Complex_nr::operator+= ( const Complex_nr & obj)
     return *this;
 };
 
+bool Complex_nr::operator== ( const Complex_nr & obj) const
+{
+    return (real == obj.real) && (img == obj.img);
+};
+
+bool Complex_nr::operator!= ( const Complex_nr & obj) const
+{
+    return !(*this == obj);
+    //return (real != obj.real) || (img != obj.img);
+};
+
 }; /*namespace cpptutorial*/
