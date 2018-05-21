@@ -5,7 +5,7 @@ namespace cpptutorial {
 
 std::ostream & operator<< (std::ostream& out, const Complex_nr& obj)
 {
-    out << "(" << obj.getReal() << " + " << obj.getImaginary() << "i)";
+    out << "(" << obj.getReal() << " , " << obj.getImaginary() << "i)";
 
     return out;
 };
@@ -33,7 +33,7 @@ Complex_nr::Complex_nr(const Complex_nr & obj){
     *this = obj;
 };
 
-double Complex_nr::getModule() {
+double Complex_nr::getModule() const{
     return std::sqrt( std::pow(real, 2.0) + std::pow(img, 2.0) );
 };
 
@@ -62,6 +62,16 @@ bool Complex_nr::operator!= ( const Complex_nr & obj) const
 {
     return !(*this == obj);
     //return (real != obj.real) || (img != obj.img);
+};
+
+Complex_nr Complex_nr::operator* ( ) const
+{
+    return Complex_nr( real, -img);
+}
+
+bool Complex_nr::operator< ( const Complex_nr & other) const 
+{
+    return this->getModule() < other.getModule();
 };
 
 }; /*namespace cpptutorial*/

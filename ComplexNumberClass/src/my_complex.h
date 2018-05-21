@@ -12,7 +12,7 @@ public:
     Complex_nr(double real, double img);
     Complex_nr(const Complex_nr & obj);
 
-    double getModule();
+    double getModule() const;
 
     double getReal() const {
         return real;
@@ -29,6 +29,12 @@ public:
     bool operator== ( const Complex_nr & obj) const;
 
     bool operator!= ( const Complex_nr & obj) const ;
+
+    //conjugate of a + bi is (a + bi)* = a - bi
+    // The dereference operator * in *a returns an object of the class tha a belongs to.
+    Complex_nr operator* ( ) const;
+
+    bool operator< ( const Complex_nr & obj) const ;
 
 private:
     double real;

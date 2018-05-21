@@ -40,7 +40,19 @@ int main()
     else
     {
         std::cout<< c1 << " equal than " << c2<< std::endl;
-    }      
+    }    
+
+    std::cout<< "The Conjugate of "<< c1 << " is " << *c1<< std::endl;
+
+    Complex_nr c6(1 , 4);
+    std::cout<< *c1 << " + " << c6<< " = " << *c1 + c6 << std::endl;
+
+    Complex_nr c7(1 , 0);
+    Complex_nr c8(0 , -2);
+    bool less_than = c7 < c8;
+    std::cout<< c7 << " < " << c8 << " ? " << less_than << std::endl;
+    less_than = c8 < c7;
+    std::cout<< c8 << " < " << c7 << " ? " << less_than << std::endl;
 
     return 0;
 }
