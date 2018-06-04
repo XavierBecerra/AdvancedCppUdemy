@@ -1,0 +1,35 @@
+void setCorners(Bitmap & bitmap){
+
+    int WIDHT = 100;
+    int HEIGH = 100;
+
+    bitmap.setPixel(0, 0, 255, 0, 0);
+    bitmap.setPixel(WIDHT, 0, 0, 255, 0);
+    bitmap.setPixel(0, HEIGH, 0, 0, 255);
+    bitmap.setPixel(WIDHT, HEIGH, 255, 0, 0);
+    bitmap.setPixel(WIDHT/2,HEIGH/2, 255, 255, 255);
+
+};
+
+void paintAll(Bitmap & bitmap, const uint8_t red, const uint8_t green, const uint8_t blue){
+
+    for(auto x = 0 ; x < bitmap.getWidth() ; x++) {
+        for(auto y = 0 ; y < bitmap.getHeight() ; y++) {
+            bitmap.setPixel(x, y, red, green, blue);
+        }
+    }
+};
+
+double computeRatio(const int iter, const int max) {
+    return static_cast<double>(iter)/static_cast<double>(max);
+};
+
+bool checkHistogram(const int pixels, int * histogram, const int max_size) {
+
+    int entries = 0;
+    for (int i = 0; i < max_size; i++) {
+        entries += histogram[i];
+    }
+
+    return entries == pixels;
+};
