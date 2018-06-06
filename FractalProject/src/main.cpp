@@ -1,29 +1,26 @@
 
 #include <iostream>
-#include "fractal_creator.h"
+#include "fractal_viewer.h"
+
+#include <QApplication>
+#include <QMainWindow>
+#include <stdio.h>
 
 using namespace std;
 using namespace fractal_project;
 
 //http://developer.mantidproject.org/ProfilingWithValgrind.html
 
-int main()
+int main(int argc, char *argv[])
 {
-    FractalCreator fractalCreator(500, 500, 1000);
+    QApplication a(argc, argv);
+    unique_ptr<QMainWindow> window{ new QMainWindow() };
 
-    fractalCreator.setStartColor( RGB_t(0, 0, 0) );
-    fractalCreator.setEndColor( RGB_t(0, 255, 255) );
-    
-	fractalCreator.addColor(0.0, RGB_t(0, 0, 255));
-	fractalCreator.addColor(0.05, RGB_t(255, 99, 71));
-	fractalCreator.addColor(0.08, RGB_t(255, 215, 0));
-	fractalCreator.addColor(1.0, RGB_t(255, 255, 255));
-
-    fractalCreator.addZoom(Zoom(295. ,fractalCreator.getHeight() - 202 , 0.1) );
-    fractalCreator.addZoom(Zoom(312. ,fractalCreator.getHeight() - 304 , 0.1) );
-
-    fractalCreator.run("Fractal.bmp");
+    std::string filename = "Fractal.bmp";
+    FractalViewer fractalViewer(500, 500, 500, filename, window.get());
+    fractalViewer.showFractal();
 
     cout<<endl << "Go Fractals!" <<endl;
-    return 0;
+    
+    return a.exec();
 }

@@ -5,6 +5,8 @@
 #include <vector>
 #include <utility>
 #include <memory>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsSceneMouseEvent>
 #include "bitmap_class.h"
 #include "mandelbrot_fractal.h"
 #include "zoom_list.h"
@@ -12,16 +14,19 @@
 
 namespace fractal_project {
 
-class FractalCreator
+class FractalCreator: public QGraphicsPixmapItem
 {
+
 public: 
     FractalCreator();
-    FractalCreator(const int width , const int height, const int max_iterations);
+    FractalCreator(const int width , const int height, const int max_iterations,const std::string & filename = "default.bmp");
     ~FractalCreator();
 //public methods
-    void run(const std::string & filename);
+    void run();
     void addZoom(const Zoom & zoom);
+    bool removeZoomAnMAybeRedraw();
     void addColor(const double & iterations_pct, const RGB_t & color);
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 //getters
     int getWidth() const;
@@ -43,6 +48,7 @@ private:
 
     std::unique_ptr< int[] > m_pHistogram = nullptr; // https://stackoverflow.com/questions/16711697/is-there-any-use-for-unique-ptr-with-array?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     std::unique_ptr< int[] > m_pIterations = nullptr;
+    std::string m_filename;
 
     bool m_bGotFirstRange{false};
 

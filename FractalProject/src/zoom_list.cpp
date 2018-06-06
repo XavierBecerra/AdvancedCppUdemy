@@ -1,3 +1,4 @@
+#include <iostream>
 #include "zoom_list.h"
 
 using namespace std;
@@ -24,8 +25,21 @@ void ZoomList::add(const Zoom & zoom){
     m_scale *= zoom.scale;
 };
 
-void ZoomList::remove(){
-    m_zooms.pop_back();
+bool ZoomList::remove(){
+    bool redrawNedded = false;
+    if( m_zooms.size() > 1) {
+        auto zoom = m_zooms.back();
+
+        //Lets recalculate the center position to zoom in fractal coordinates
+        m_scale = m_scale / zoom.scale;
+
+        m_xCenter -= (zoom.x - m_width/2.) * m_scale;
+        m_yCenter -= (zoom.y - m_height/2.) * m_scale;
+
+        m_zooms.pop_back();
+        redrawNedded = true;
+    };
+    return redrawNedded;
 };
 
 std::pair<double, double> ZoomList::doZoom(int x, int y) {

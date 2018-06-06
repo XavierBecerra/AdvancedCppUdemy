@@ -1,11 +1,11 @@
 #include "fractal_creator.h"
 #include <math.h>
 #include <assert.h>
+#include <QPointF>
 
 using namespace std;
 
 namespace fractal_project {
-
 
 FractalCreator::FractalCreator() : 
     m_pHistogram(new int[100]{0}), 
@@ -15,12 +15,13 @@ FractalCreator::FractalCreator() :
         addZoom(zoom );
 };
 
-FractalCreator::FractalCreator(const int width , const int height, const int max_iterations): 
+FractalCreator::FractalCreator(const int width , const int height, const int max_iterations, const std::string & filename): 
     m_bitmap( width , height ),
     m_fractal( max_iterations ), 
     m_zoomlist( width , height ),
     m_pHistogram(new int[max_iterations]{0}), 
-    m_pIterations(new int[width * height]{0} ){
+    m_pIterations(new int[width * height]{0} ),
+    m_filename(filename) {
 
         auto zoom = Zoom(width/2., height/2., 4./width );
         addZoom(zoom );
@@ -30,11 +31,13 @@ FractalCreator::~FractalCreator(){
 
 };
 
-void FractalCreator::run(const std::string & filename) {
+void FractalCreator::run() {
     computeIterations();
     calculateRangeTotals();
     drawFractal();
-    writeBitmap(filename);
+    writeBitmap(m_filename);
+    
+    setPixmap(QPixmap(m_filename.data()));
 };
 
 int FractalCreator::calculateTotalIterations(){
@@ -163,12 +166,32 @@ void FractalCreator::addZoom(const Zoom & zoom){
     m_zoomlist.add(zoom);
 };
 
+bool FractalCreator::removeZoomAnMAybeRedraw(){
+    bool redrawNedded = m_zoomlist.remove();
+    return redrawNedded;
+};
+
 void FractalCreator::addColor(const double & iterations_pct, const RGB_t & color) {
     auto checkPoint = std::pair<double, RGB_t>( iterations_pct * m_fractal.MAX_ITERATIONS , color );
     m_colorRange.push_back( checkPoint );
 
 	m_rangeTotals.push_back(0);
 }
+
+void FractalCreator::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+    QPointF mousePos = event->pos();
+
+    if(event->button() == Qt::RightButton) {
+        if( removeZoomAnMAybeRedraw() ){
+            run();
+        };
+    }
+    else {
+        addZoom(Zoom(mousePos.x() , getHeight() - mousePos.y() , 0.1) );
+        run();
+    }
+
+};
 
 //getters
 int FractalCreator::getWidth() const {
